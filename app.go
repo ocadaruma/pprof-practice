@@ -26,7 +26,7 @@ func blockingHandler(w http.ResponseWriter, r *http.Request) {
 func cpuIntensiveHandler(w http.ResponseWriter, r *http.Request) {
 	str := ""
 
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < 30000; i++ {
 		if i % 2 == 0 {
 			str += "e"
 		} else {

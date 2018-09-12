@@ -2,11 +2,17 @@
 
 set -eu
 
+trap "exit" INT TERM
+trap "kill 0" EXIT
+
 go build slow_app.go && ./slow_app &
 go build app.go && ./app &
 
-wrk -t5 -c10 -d45s http://localhost:8080/blocking &
-wrk -t5 -c10 -d45s http://localhost:8080/cpu-intensive &
+# wait for startup
+sleep 5
+
+wrk -t5 -c10 -d40s http://localhost:8080/blocking &
+wrk -t5 -c10 -d40s http://localhost:8080/cpu-intensive &
 
 # wait for warming up
 sleep 5
